@@ -63,9 +63,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WebUI\WebUI.csproj">
+    <ProjectReference Include="..\WebUI\GameStore.WebUI.csproj">
       <Project>{3DE0E9FA-C0D9-408A-A26D-42E5573E0AFE}</Project>
-      <Name>WebUI</Name>
+      <Name>GameStore.WebUI</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
