@@ -21,9 +21,9 @@ namespace WebUI.Controllers
             GamesListViewModel model = new GamesListViewModel
             {
                 Games = repository.Games
-                .OrderBy(game => game.GameId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize),
+                    .OrderBy(game => game.GameId)
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
