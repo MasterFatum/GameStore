@@ -10,9 +10,7 @@ namespace WebUI.HtmlHelpers
 {
     public static class PagingHelpers
     {
-        public static MvcHtmlString PageLinks(this HtmlHelper html,
-            PagingInfo pagingInfo,
-            Func<int, string> pageUrl)
+        public static MvcHtmlString PageLinks(this HtmlHelper html, PagingInfo pagingInfo, Func<int, string> pageUrl)
         {
             StringBuilder result = new StringBuilder();
 
