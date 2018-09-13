@@ -12,10 +12,12 @@ namespace WebUI.Controllers
     public class GameController : Controller
     {
         EFGameRepository repository = new EFGameRepository();
-        
-        public ActionResult List()
+
+        public int pageSize = 5;
+
+        public ActionResult List(int page = 1)
         {
-            return View(repository.Games);
+            return View(repository.Games.OrderBy(game => game.GameId).Skip((page - 1) * pageSize).Take(pageSize));
         }
     }
 }
