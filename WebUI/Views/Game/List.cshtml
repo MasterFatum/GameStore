@@ -1,20 +1,48 @@
-﻿@using WebUI.Models
-@using WebUI.HtmlHelpers
-@model GamesListViewModel
-
+﻿@model PagedList.IPagedList<GameStore.Domain.Entities.Game>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
-    ViewBag.Title = "Товары";
+    ViewBag.Title = "Index";
 }
 
-@foreach (var p in Model.Games)
-{
-    <div>
-        <h3>@p.Name</h3>
-        <p>@p.Description</p>
-        <h4>@p.Price.ToString("# руб")</h4>
-    </div>
-}
 
-<div>
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x }))
+<h2 align="center">Список игр</h2>
+<br><br><br><br><br>
+
+<div align="center">
+    <table class="table table-hover">
+
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Название</th>
+                <th scope="col">Цена</th>
+                <th scope="col">Описание</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var g in Model)
+            {
+                <tr class="table-primary">
+                    <td>@g.GameId</td>
+                    <td>@g.Name</td>
+                    <td>@g.Price</td>
+                    <td>@g.Description</td>
+                </tr>
+
+            }
+
+        </tbody>
+    </table>
 </div>
+
+<br>
+<div class="btn-group pull-right">
+
+    Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
+
+</div>
+

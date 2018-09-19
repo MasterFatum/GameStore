@@ -6,7 +6,9 @@ using System.Web.Mvc;
 using Domain.Concrete;
 using GameStore.Domain.Abstract;
 using GameStore.Domain;
-using WebUI.Models;
+using GameStore.Domain.Entities;
+using PagedList;
+using PagedList.Mvc;
 
 namespace WebUI.Controllers
 {
@@ -14,24 +16,14 @@ namespace WebUI.Controllers
     {
         EFGameRepository repository = new EFGameRepository();
 
-        public int pageSize = 5;
+        private int pages = 3;
 
-        public ViewResult List(int page = 1)
+        
+        public ActionResult List(int page = 1)
         {
-            GamesListViewModel model = new GamesListViewModel
-            {
-                Games = repository.Games
-                    .OrderBy(game => game.GameId)
-                    .Skip((page - 1) * pageSize)
-                    .Take(pageSize),
-                PagingInfo = new PagingInfo
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = pageSize,
-                    TotalItems = repository.Games.Count()
-                }
-            };
-            return View(model);
+            IEnumerable<Game> games = repository.Games.ToList();
+
+            return View(games.ToPagedList(page, pages));
         }
     }
 }
