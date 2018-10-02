@@ -6,6 +6,7 @@
 }
 
 
+
 <h2 align="center">Список игр</h2>
 <br><br><br><br><br>
 
@@ -13,25 +14,37 @@
     <table class="table table-hover">
 
         <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Название</th>
-                <th scope="col">Цена</th>
-                <th scope="col">Описание</th>
-            </tr>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Название</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Описание</th>
+        </tr>
         </thead>
 
         <tbody>
-            @foreach (var g in Model)
-            {
-                <tr class="table-primary">
-                    <td>@g.GameId</td>
-                    <td>@g.Name</td>
-                    <td>@g.Price</td>
-                    <td>@g.Description</td>
-                </tr>
+        @foreach (var g in Model)
+        {
+            <tr class="table-primary">
+                hbv <td>@g.GameId</td>
+                <td>@g.Name</td>
+                <td>@g.Price</td>
+                <td>@g.Description</td>
+                <td>
 
-            }
+                </td>
+            </tr>
+
+        }
+            
+        @using (Html.BeginForm("AddToCart", "Cart"))
+        {
+            <div class="pull-right">
+                @Html.TextBox("gameIdString")
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                <input type="submit" class="btn btn-success" value="Добавить в корзину" />
+            </div>
+        }
 
         </tbody>
     </table>
@@ -42,7 +55,7 @@
 
     Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount
 
-    @Html.PagedListPager(Model, page => Url.Action("List", new { page }))
+    @Html.PagedListPager(Model, x => Url.Action("List", new { page = x, category = ViewBag.Category}))
 
 </div>
 

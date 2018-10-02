@@ -9,6 +9,7 @@ using GameStore.Domain;
 using GameStore.Domain.Entities;
 using PagedList;
 using PagedList.Mvc;
+using WebUI.Models;
 
 namespace WebUI.Controllers
 {
@@ -19,9 +20,13 @@ namespace WebUI.Controllers
         private int pages = 3;
 
         
-        public ActionResult List(int page = 1)
+        public ActionResult List(string category, int page = 1)
         {
-            IEnumerable<Game> games = repository.Games.ToList();
+            IEnumerable<Game> games = repository.Games
+                    .Where(p => category == null || p.Category == category)
+                    .OrderBy(game => game.GameId);
+
+            ViewBag.IPaggingModel = games;
 
             return View(games.ToPagedList(page, pages));
         }
