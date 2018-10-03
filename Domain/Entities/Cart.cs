@@ -15,6 +15,8 @@ namespace Domain.Entities
 
     public class Cart
     {
+        public IEnumerable<CartLine> Lines => lineCollection;
+
         List<CartLine> lineCollection = new List<CartLine>();
 
         public void AddItem(Game game, int quantity)
@@ -50,6 +52,6 @@ namespace Domain.Entities
             return lineCollection.Sum(e => e.Game.Price * e.Quantity);
         }
 
-        public IEnumerable<CartLine> Lines => lineCollection;
+        
     }
 }
