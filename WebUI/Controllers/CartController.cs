@@ -55,5 +55,10 @@ namespace WebUI.Controllers
         {
             return PartialView(cart);
         }
+
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            return View(new ShippingDetails());
+        }
     }
 }
