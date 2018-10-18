@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Domain.Abstract;
 using Domain.Concrete;
 using Domain.Entities;
 using GameStore.Domain.Entities;
@@ -14,6 +15,10 @@ namespace WebUI.Controllers
     {
 
         EFGameRepository repository = new EFGameRepository();
+
+        EmailOrderProcessor emailOrderProcessor = new EmailOrderProcessor(new EmailSettings());
+
+        IOrderProcessor orderProcessor;
 
         public ViewResult Index(Cart cart, string returnUrl)
         {
@@ -56,9 +61,30 @@ namespace WebUI.Controllers
             return PartialView(cart);
         }
 
-        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        [HttpGet]
+        public ViewResult Checkout()
         {
             return View(new ShippingDetails());
+        }
+
+        [HttpPost]
+        public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
+        {
+            if (cart.Lines.Count() == 0)
+            {
+                ModelState.AddModelError("", "Извините, ваша корзина пуста!");
+            }
+
+            if (ModelState.IsValid)
+            {
+                emailOrderProcessor.ProcessOrder(cart, shippingDetails);
+                cart.Clear();
+                return View("Completed");
+            }
+            else
+            {
+                return View(shippingDetails);
+            }
         }
     }
 }

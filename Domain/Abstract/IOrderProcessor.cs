@@ -7,8 +7,8 @@ using Domain.Entities;
 
 namespace Domain.Abstract
 {
-    interface IOrderProcessor
+    public interface IOrderProcessor
     {
-        void ProcessOrder(Cart Cart, ShippingDetails shippingDetails);
+        void ProcessOrder(Cart cart, ShippingDetails shippingDetails);
     }
 }

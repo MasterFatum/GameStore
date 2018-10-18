@@ -14,7 +14,7 @@ namespace Domain.Concrete
     {
         private EmailSettings emailSettings;
 
-        EmailOrderProcessor(EmailSettings settings)
+        public EmailOrderProcessor(EmailSettings settings)
         {
             emailSettings = settings;
         }
@@ -91,6 +91,5 @@ namespace Domain.Concrete
         public string ServerName = "smtp.example.com";
         public int ServerPort = 25;
         public bool WriteAsFile = true;
-        public string FileLocation = @"c:\game_store_emails";
+        public string FileLocation = @"d:\";
     }
-}
