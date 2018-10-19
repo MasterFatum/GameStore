@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Domain.Concrete;
+using GameStore.Domain.Entities;
 
 namespace WebUI.Controllers
 {
@@ -11,10 +12,32 @@ namespace WebUI.Controllers
     {
         EFGameRepository context = new EFGameRepository();
 
-        // GET: Admin
+
         public ActionResult Index()
         {
             return View(context.Games);
+        }
+
+        public ViewResult Edit(int gameId)
+        {
+            Game game = context.Games.FirstOrDefault(g => g.GameId == gameId);
+
+            return View(game);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(Game game)
+        {
+            if (ModelState.IsValid)
+            {
+                context.SaveGame(game);
+                TempData["message"] = $"Изменения в игре \"{game.Name}\" были сохранены";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(game);
+            }
         }
     }
 }
