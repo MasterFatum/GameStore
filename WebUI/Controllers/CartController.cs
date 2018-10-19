@@ -18,7 +18,6 @@ namespace WebUI.Controllers
 
         EmailOrderProcessor emailOrderProcessor = new EmailOrderProcessor(new EmailSettings());
 
-        IOrderProcessor orderProcessor;
 
         public ViewResult Index(Cart cart, string returnUrl)
         {
