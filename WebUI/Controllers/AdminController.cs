@@ -39,5 +39,23 @@ namespace WebUI.Controllers
                 return View(game);
             }
         }
+
+        public ViewResult Create()
+        {
+            return View("Edit", new Game());
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int gameId)
+        {
+            Game game = context.DeleteGame(gameId);
+
+            if (game != null)
+            {
+                TempData["message"] = $"Игра \"{game.Name}\" была удалена";
+            }
+
+            return RedirectToAction("Index");
+        }
     }
 }
