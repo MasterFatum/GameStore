@@ -8,6 +8,7 @@ using GameStore.Domain.Entities;
 
 namespace WebUI.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         EFGameRepository context = new EFGameRepository();
